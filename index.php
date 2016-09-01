@@ -1,68 +1,52 @@
 <?php
-include_once __DIR__."/AutoLoad.php";
-AutoLoad::run();
+$config = include_once __DIR__."/../ericlib_config.php";
+Config::getInstance()->setConfig($config);
+include_once __DIR__ . "/AutoLoad.php";
 
 
-//$url = "http://zhaochengyong.dev-merchant.yongche.org/V1/Driverstatread/getOrderRecordDetail?driver_id=50061581&service_order_id=6316831073037834634";
-//$curlhttp = new CurlHttp();
-//$res = $curlhttp->httpPost($url);
-//print_r($res);
+class Config{
+    private static $config;
+    private $_configInfo = array();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-exit;
-$tmpDirs = array();
-$nextDirs = array();
-$nowDirs = array('/home/jiakun/git');
-$i = 6;
-while($i--)
-{
-    foreach($nowDirs as $dir)
+    private function __construct()
     {
-        $tmpDirs = getFilenameByDir($dir);
-        $nextDirs = array_merge($nextDirs,$tmpDirs);
     }
-    $nowDirs = $nextDirs;
-    $nowLength = $nextLength;
-    $nextLength = sizeof($nowDirs);
-}
-    print_r($nowDirs);
+    public static function getInstance(){
+        if(!(self::$config instanceof self)){
+            self::$config = new self();
+        }
+        return self::$config;
+    }
 
-function getFilenameByDir($dir)
-{
-    $res = array();
-    if(is_dir($dir))
-    {
-        $res = makeRes(scandir($dir),$dir);
+    public function getValue(){
+
     }
-    return $res;
-}
- 
-function makeRes($array,$dir)
-{
-    $res = array();
-    foreach($array as $value)
-    {
-        if($value !== "." && $value !== "..")
-        {
-            $res[] = $dir."/".$value;
-        } 
+
+    public function setConfig($config){
+        $this->_configInfo = $config;
     }
-    return $res;
+
+    public function getConfig($key){
+        return $this->_configInfo[$key];
+    }
 }
+
+AutoLoad::getInstance()->init(Config::getInstance()->getConfig("path"));
+function autoLoad($className){
+    $classPathConfig = AutoLoad::getInstance()->getClassPath();
+    $classPath = $classPathConfig[$className];
+    include_once "{$classPath}";
+}
+spl_autoload_register('autoLoad');
+
+$a = DataBase::getInstance();
+$res = $a->getConnect()->query("select * from labour_company");
+foreach($res as $row)
+{
+    print_r($row['city']);
+}
+
+
+
 
 
