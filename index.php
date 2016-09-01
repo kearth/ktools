@@ -40,7 +40,7 @@ function autoLoad($className){
 spl_autoload_register('autoLoad');
 
 $a = DataBase::getInstance();
-$res = $a->getConnect()->query("select * from labour_company");
+$res = $a->getConnect()->query(Config::getInstance()->getConfig("test"));
 foreach($res as $row)
 {
     print_r($row['city']);
