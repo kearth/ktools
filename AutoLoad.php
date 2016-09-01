@@ -113,8 +113,3 @@ class AutoLoad{
 
 
 
-
-//$url = "http://zhaochengyong.dev-merchant.yongche.org/V1/Driverstatread/getOrderRecordDetail?driver_id=50061581&service_order_id=6316831073037834634";
-//$curlhttp = new CurlHttp();
-//$res = $curlhttp->httpPost($url);
-//print_r($res);
