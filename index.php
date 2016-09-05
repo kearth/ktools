@@ -18,10 +18,6 @@ class Config{
         return self::$config;
     }
 
-    public function getValue(){
-
-    }
-
     public function setConfig($config){
         $this->_configInfo = $config;
     }
@@ -39,12 +35,15 @@ function autoLoad($className){
 }
 spl_autoload_register('autoLoad');
 
-$a = DataBase::getInstance();
-$res = $a->getConnect()->query(Config::getInstance()->getConfig("test"));
-foreach($res as $row)
-{
-    print_r($row['city']);
-}
+
+
+$con = DataBase::getConnect();
+$res = $con->query(Config::getInstance()->getConfig("test"));
+$a = Page::arrayToPage($res,9,5);
+print_r($a);
+
+//$a  =Page::sqlToPage(Config::getInstance()->getConfig("test"),1,1);
+//print_r($a);
 
 
 

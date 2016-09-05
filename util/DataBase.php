@@ -8,36 +8,42 @@
  */
 class DataBase
 {
-    private $host;
-    private $pass;
-    private $port;
-    private $dbname;
-    private $username;
-    private $dsn;
-    private $connect;
-    private static $db;
+    private $_host;
+    private $_pass;
+    private $_port;
+    private $_dbname;
+    private $_username;
+    private $_dsn;
+    private $_connect; //PDO连接
+    private static $_db;
 
 
     private function __construct()
     {
         $config = Config::getInstance()->getConfig("dsn");
-        $this->host = $config['host'];
-        $this->username = $config['username'];
-        $this->pass = $config['password'];
-        $this->port = $config['port'];
-        $this->dbname = $config['dbname'];
-        $this->dsn = "mysql:host={$this->host};dbname={$this->dbname}";
-        $this->connect = new PDO($this->dsn,$this->username,$this->pass);
+        $this->_host = $config['host'];
+        $this->_username = $config['username'];
+        $this->_pass = $config['password'];
+        $this->_port = $config['port'];
+        $this->_dbname = $config['dbname'];
+        $this->_dsn = "mysql:host={$this->_host};dbname={$this->_dbname}";
+        $this->_connect = new PDO($this->_dsn,$this->_username,$this->_pass);
     }
 
-    public static function getInstance(){
-        if(!(self::$db instanceof self)){
-            self::$db = new self();
+    //获取DB对象
+    public static function getConnect(){
+        if(!(self::$_db instanceof self)){
+            self::$_db = new self();
         }
-        return self::$db;
+        return self::$_db;
     }
 
-    public function getConnect(){
-        return $this->connect;
+    public function query($sql){
+        $res = array();
+        $pdoStat = $this->_connect->query($sql);
+        foreach($pdoStat as $row){
+            $res[] = $row;
+        }
+        return $res;
     }
 }
