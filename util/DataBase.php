@@ -41,8 +41,10 @@ class DataBase
     public function query($sql){
         $res = array();
         $pdoStat = $this->_connect->query($sql);
-        foreach($pdoStat as $row){
-            $res[] = $row;
+        if(!empty($pdoStat)){
+            foreach($pdoStat as $row){
+                $res[] = $row;
+            }
         }
         return $res;
     }

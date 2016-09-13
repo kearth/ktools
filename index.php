@@ -3,7 +3,6 @@ $config = include_once __DIR__."/../ericlib_config.php";
 Config::getInstance()->setConfig($config);
 include_once __DIR__ . "/AutoLoad.php";
 
-
 class Config{
     private static $config;
     private $_configInfo = array();
@@ -35,15 +34,37 @@ function autoLoad($className){
 }
 spl_autoload_register('autoLoad');
 
+$j = 0;
+
+class Passager{
+    public $number;
+    public $openId;
+    public $status;
+    public function __construct()
+    {
+        $this->number = $GLOBALS['j']++;
+        $this->openId = $this->getRand16Num();
+        $this->status = 0;
+    }
 
 
-$con = DataBase::getConnect();
-$res = $con->query(Config::getInstance()->getConfig("test"));
-$a = Page::arrayToPage($res,9,5);
-print_r($a);
+    public function getRand16Num(){
+        $str ='';
+        for($i=0;$i<16;$i++){
+            $str .= mt_rand(0,9);
+        }
+        return $str;
+    }
+}
+$q = new Quene();
+$q->enQuene(new Passager());
+$q->enQuene(new Passager());
+$q->enQuene(new Passager());
+$q->deQuene();
+print_r($q->getQuene());
 
-//$a  =Page::sqlToPage(Config::getInstance()->getConfig("test"),1,1);
-//print_r($a);
+
+
 
 
 
