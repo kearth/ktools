@@ -1,2 +1,2 @@
-# EricLib
-just for my test
+# Kearth Lib
+There are some experimental program
