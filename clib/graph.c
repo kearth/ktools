@@ -16,8 +16,15 @@ typedef struct vertex{
 } Vertex;
 
 
+typedef struct graph{
+    Vertex *vertex[GRAPH_SIZE];
+    
+    int vertex_count;
+} Graph;
+
 Edge * CreateEdge(int v);
 Vertex * CreateVertex(int val);
+Graph * CreateGraph(List *v[],int length);
 
 Edge * CreateEdge(int v){
     Edge *e = (Edge*)malloc(sizeof(Edge));
@@ -35,10 +42,14 @@ Vertex * CreateVertex(int val){
     return v;
 }
 
-
-void CreateGraph(List *v[],int length){
-    Vertex *graph[length];
-    for(int i =0; i< length;i++){
-        graph[i] = CreateVertex(i);
-    }
-}
+/*Graph * CreateGraph(List *v[],int length){*/
+    /*Graph * graph = (Graph*)malloc(sizeof(Graph));*/
+    /*graph->vertex_count = length;*/
+    /*for(int i =0; i< length;i++){*/
+        /*graph->vertex[i] = CreateVertex(i);*/
+        /*graph->vertex[i]->edge_count = *v[i]->count;*/
+        /*for(int j=0;j< *v[i]->count;j++){*/
+        /*}*/
+    /*}*/
+    /*return graph;*/
+/*}*/

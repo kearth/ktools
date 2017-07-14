@@ -20,6 +20,7 @@ Status IsExistInList(List *l, Node *n);
 void DisplayList(List *l);
 List * GetList(int v[],int length);
 
+//创建List
 List * CreateList(){
     List *l = (List*)malloc(sizeof(List));
     l->head = NULL;
@@ -27,6 +28,7 @@ List * CreateList(){
     return l;
 };
 
+//创建结点
 Node * CreateNode(int v){
     Node *n = (Node*)malloc(sizeof(Node));
     n->next = NULL;
@@ -34,6 +36,7 @@ Node * CreateNode(int v){
     return n;
 }
 
+//向List插入结点Node
 Status InsertList(List *l, Node *n){
     //如果存在不允许插入
     if(IsExistInList(l,n)) return False;

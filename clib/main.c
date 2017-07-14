@@ -25,6 +25,5 @@ Status main(){
     l[1] = l2;
     l[2] = l3;
     l[3] = l4;
-    CreateGraph(l,4);
     return Success;
 }
