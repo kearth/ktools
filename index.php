@@ -1,69 +1,28 @@
 <?php
-$config = include_once __DIR__."/../ericlib_config.php";
-Config::getInstance()->setConfig($config);
-include_once __DIR__ . "/AutoLoad.php";
+include "./php/tree/unlimited_classification.php";
 
-class Config{
-    private static $config;
-    private $_configInfo = array();
+$address = array(
+    array('id'=>1  , 'address'=>'安徽' , 'parent_id' => 0),
+    array('id'=>2  , 'address'=>'江苏' , 'parent_id' => 0),
+    array('id'=>3  , 'address'=>'合肥' , 'parent_id' => 1),
+    array('id'=>4  , 'address'=>'庐阳区' , 'parent_id' => 3),
+    array('id'=>5  , 'address'=>'大杨镇' , 'parent_id' => 4),
+    array('id'=>6  , 'address'=>'南京' , 'parent_id' => 2),
+    array('id'=>7  , 'address'=>'玄武区' , 'parent_id' => 6),
+    array('id'=>8  , 'address'=>'梅园新村街道', 'parent_id' => 7),
+    array('id'=>9  , 'address'=>'上海' , 'parent_id' => 0),
+    array('id'=>10 , 'address'=>'黄浦区' , 'parent_id' => 9),
+    array('id'=>11 , 'address'=>'外滩' , 'parent_id' => 10),
+    array('id'=>12 , 'address'=>'安庆' , 'parent_id' => 1)
+);
 
-    private function __construct()
-    {
-    }
-    public static function getInstance(){
-        if(!(self::$config instanceof self)){
-            self::$config = new self();
-        }
-        return self::$config;
-    }
 
-    public function setConfig($config){
-        $this->_configInfo = $config;
-    }
-
-    public function getConfig($key){
-        return $this->_configInfo[$key];
-    }
+$uc = new UnlimitedClassification();
+foreach ($address as $node) {
+    $uc->setNode($node['id'], $node['parent_id'], $node['address']);
 }
 
-AutoLoad::getInstance()->init(Config::getInstance()->getConfig("path"));
-function autoLoad($className){
-    $classPathConfig = AutoLoad::getInstance()->getClassPath();
-    $classPath = $classPathConfig[$className];
-    include_once "{$classPath}";
-}
-spl_autoload_register('autoLoad');
-
-$j = 0;
-
-class Passager{
-    public $number;
-    public $openId;
-    public $status;
-    public function __construct()
-    {
-        $this->number = $GLOBALS['j']++;
-        $this->openId = $this->getRand16Num();
-        $this->status = 0;
-    }
-
-
-    public function getRand16Num(){
-        $str ='';
-        for($i=0;$i<16;$i++){
-            $str .= mt_rand(0,9);
-        }
-        return $str;
-    }
-}
-$q = new Quene();
-$q->enQuene(new Passager());
-$q->enQuene(new Passager());
-$q->enQuene(new Passager());
-$q->deQuene();
-print_r($q->getQuene());
-
-
+$uc->show();
 
 
 
