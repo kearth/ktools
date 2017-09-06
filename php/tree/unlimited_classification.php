@@ -1,6 +1,6 @@
 <?php
 /**
- *  @name   unlimited_classification    无限极分类
+ *  @name   UnlimitedClassification   无限极分类
  *  @package tree
  *  @author  kearth@yeah.net
  *  @version v1.0.0
