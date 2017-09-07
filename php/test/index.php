@@ -47,7 +47,12 @@ class Test
 
     public static function LogTest()
     {
-        Log::info("666");
+        Log::init([
+            'messageType' => Log::MESSAGE_TYPE_FILE,
+            'destination' => '/var/log/nginx/error.log',
+            'extraHeader' => ''
+        ]);
+        Log::info(777);
     }
 
 }

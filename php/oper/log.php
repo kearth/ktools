@@ -20,60 +20,126 @@ class Log
     const MESSAGE_TYPE_FILE = 3;    //发送到文件
     const MESSAGE_TYPE_SAPI = 4;    //发送到SAPI
 
-    private static $messageType = 0; 
-    private static $destination = "/var/log/nginx/error.log";
-    private static $extraHeader = '';
+    const HAS_INIT          = 1;
+    const NONE_INIT         = 0;
+
+    private static $instance = null;
+    private $messageType;
+    private $destination;
+    private $extraHeader;
+    private $logLevel;
+    private $hasInit;
     
-    public static function info(string $message)
-    {
-        $message = self::makeMessage(self::ERROR_LEVEL_INFO, $message);
-        self::errorLog($message, self::MESSAGE_TYPE_FILE, self::$destination, self::$extraHeader);
-    }   
-
-
-    private static function errorLog(string $message, int $messageType, $destination = '', $extraHeader = '')
-    {
-        switch ($messageType) {
-            case self::MESSAGE_TYPE_SYS:
-                error_log($message, self::MESSAGE_TYPE_SYS);
-                break;
-            case self::MESSAGE_TYPE_MAIL:
-                if (is_string($destination) && is_string($extraHeader)) {
-                    error_log($message, self::MESSAGE_TYPE_MAIL, $destination, $extraHeader);
-                } else {
-                    error_log($message, self::MESSAGE_TYPE_SYS);
-                }
-                break;
-            case self::MESSAGE_TYPE_FILE:
-                if (is_file($destination)) {
-                    error_log($message, self::MESSAGE_TYPE_FILE, $destination);
-                } else {
-                    error_log($message, self::MESSAGE_TYPE_SYS);
-                }
-                break;
-            case self::MESSAGE_TYPE_SAPI:
-                error_log($message, self::MESSAGE_TYPE_SAPI);
-                break;
-            default:
-                error_log($message, self::MESSAGE_TYPE_SYS);
-                break;
+    public function initStatic(array $set)
+    {   
+        $keys = [
+            'messageType',
+            'destination',
+            'extraHeader'
+        ];
+        if (empty(array_diff($keys, array_keys($set)))) {
+            extract($set);
+            $this->messageType = $messageType;
+            $this->destination = $destination;
+            $this->extraHeader = $extraHeader;
+            $this->hasInit     = self::HAS_INIT;
+        } else {
+            throw new Exception("初始化失败");
         }
     }
 
-    private static function makeMessage($logLevel, $message)
+    public function showSetStatic()
     {
-        $debugTrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,3);
-        $action    = $debugTrace[2]['class'] . $debugTrace[2]['type'] . $debugTrace[2]['function'];
-        $opertor   = $debugTrace[2]['class'];
-        date_default_timezone_set("PRC");
+        var_export($this);   
+    }
+
+    public function infoStatic(string $message)
+    {
+        $this->logLevel = self::ERROR_LEVEL_INFO;
+        $this->errorLog(
+            $this->createMessage($message)
+        );
+    }   
+
+    public function errorStatic()
+    {
+        $this->hasInit = self::NONE_INIT;
+    }
+
+    private function __construct()
+    {
+
+    }
+
+    public static function getInstance()
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new static();
+        }
+        return self::$instance;
+    }
+
+
+    public static function __callStatic($name, $parameters)
+    {
+        $funcName = lcfirst($name . "Static");
+        $instance = self::getInstance();
+        if (method_exists($instance, $funcName)) {
+            call_user_func_array([$instance, $funcName], $parameters);
+        } else {
+            throw new Exception("没有这个方法");
+        }
+    }
+
+    private function errorLog($message)
+    {
+        if (self::HAS_INIT === $this->hasInit) {
+            error_log($message, $this->messageType, $this->destination, $this->extraHeader);
+        } else {
+            throw new Exception("Log 没有初始化");   
+        }
+    }
+
+    private function createMessage($message)
+    {
         $msg  = [
-            'logTime'  => '[' . date("Y-m-d H:i:s", time()) . ']',
-            'logLevel' => $logLevel,
-            'opertor'  => $opertor,
-            'action'   => $action,
-            'params'   => $message
+            'currentTime'  => $this->getCurrentTime(),
+            'logLevel'     => $this->logLevel,
+            'ipAddr'       => $this->getIp(),
+            'function'     => $this->getFuncName(),
+            'message'      => $message
         ];
-        return implode('  ', $msg);
+        return implode('  ', $msg) . "\n";
+    }
+
+    private function getCurrentTime()
+    {
+        date_default_timezone_set("PRC");
+        return date("[Y-m-d H:i:s]", time());
+    }
+    
+    private function getIp()
+    {
+        return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "127.0.0.1";
+    }
+
+    private function getFuncName()
+    {
+        $debuaBacktrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+        foreach ($debuaBacktrace as $trace) {
+            if (__CLASS__ === $trace['class']) {
+                if (isset($trace['line'])) {
+                    $line = $trace['line'];
+                }
+                continue;
+            }
+            $function = $trace['function'];
+            $class    = $trace['class'];
+            $type     = isset($trace['type']) ? $trace['type'] : ' ';
+            break;
+        }
+        return $class . $type . $function . ":" . $line;
     }
 
 }
+
