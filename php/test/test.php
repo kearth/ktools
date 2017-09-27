@@ -2,6 +2,17 @@
 namespace Php\Test;
 
 use Php\Model\BirthDate;
+use Php\Pattern\Strategy\Strategy;
+use Php\Pattern\Strategy\Wei;
+use Php\Pattern\Strategy\Shu;
+use Php\Pattern\Strategy\Wu;
+use Php\Pattern\Proxy\ZhongJie;
+use Php\Pattern\Proxy\LianJia;
+use Php\Pattern\Proxy\WoAiWoJia;
+use Php\Pattern\Singleton\Singleton;
+use Php\Pattern\Multition\Multition;
+use Php\Pattern\Factory\HumanFactory;
+use Php\Pattern\Facade\PostOffice;
 
 include "./php/tree/unlimited_classification.php";
 include "./php/oper/log.php";
@@ -25,6 +36,15 @@ class Test
         $endTime = (microtime(true) - $beginTime) * 1000;
         echo "++++++++++++++++  The Test End Under $endTime ms!  ++++++++++++++++\n";
     }
+    
+    public static function patternTest()
+    {
+        $postOffice = new PostOffice();
+
+        $postOffice->sendLetter("Hello world", "dear 222");
+    }
+
+
 
     public static function UnlimitedClassification()
     {
@@ -68,7 +88,7 @@ class Test
         var_export($obj);
     }
 
-    public static function BirthDateTest()
+    public static function BirthDate()
     {
         $birth = [
             6 => 21,

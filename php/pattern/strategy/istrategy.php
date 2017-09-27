@@ -1,6 +1,7 @@
 <?php
+namespace Php\Pattern\Strategy;
 
-interface Istrategy
+interface IStrategy
 {
-
+    public function operate();
 }
