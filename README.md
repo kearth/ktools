@@ -1,2 +1,2 @@
 # Kearth Lib
-There are some experimental program
+Just For Test Some Idea
