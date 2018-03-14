@@ -1,5 +1,12 @@
 {
     "require": {
-        "catfan/Medoo": "^1.4"
+        "catfan/Medoo": "^1.4",
+        "kearth/ceramic": "dev-master"
+    },
+    "repositories": {
+        "kearth/ceramic": {
+            "type": "path",
+            "url": "/Users/eric/git/KearthLib/kearth/ceramic"
+        }
     }
 }

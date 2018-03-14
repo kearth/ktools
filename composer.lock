@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca1bade53de4a46b9a592614d22fac17",
+    "content-hash": "5e306ec8d0465d67a0cdcde6d818f79b",
     "packages": [
         {
             "name": "catfan/medoo",
-            "version": "v1.4.5",
+            "version": "v1.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/catfan/Medoo.git",
-                "reference": "8ee8ae1c4df0fee3822a01333eab88893e548fcc"
+                "reference": "4e51f7483b01ed1195565bb64e85ea8bd17b63cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/catfan/Medoo/8ee8ae1c4df0fee3822a01333eab88893e548fcc.zip",
-                "reference": "8ee8ae1c4df0fee3822a01333eab88893e548fcc",
+                "url": "https://files.phpcomposer.com/files/catfan/Medoo/4e51f7483b01ed1195565bb64e85ea8bd17b63cb.zip",
+                "reference": "4e51f7483b01ed1195565bb64e85ea8bd17b63cb",
                 "shasum": ""
             },
             "require": {
@@ -31,7 +31,7 @@
                 "ext-pdo_oci8": "For Oracle version 8 database",
                 "ext-pdo_pqsql": "For PostgreSQL database",
                 "ext-pdo_sqlite": "For SQLite database",
-                "ext-pdo_sqlsrv": "For MSSQL database on Windows platform"
+                "ext-pdo_sqlsrv": "For MSSQL database"
             },
             "type": "framework",
             "autoload": {
@@ -63,13 +63,35 @@
                 "sql",
                 "sqlite"
             ],
-            "time": "2017-06-24T14:43:07+00:00"
+            "time": "2018-03-07T09:42:23+00:00"
+        },
+        {
+            "name": "kearth/ceramic",
+            "version": "9999999-dev",
+            "dist": {
+                "type": "path",
+                "url": "/Users/eric/git/KearthLib/kearth/ceramic",
+                "reference": "86798bd5e5bdaf8a232876fb1cb38f77c6d6ca4e",
+                "shasum": null
+            },
+            "require": {
+                "ext-pdo": "*",
+                "php": ">=5.4"
+            },
+            "type": "framework",
+            "autoload": {
+                "psr-4": {
+                    "Ceramic\\": "/src"
+                }
+            }
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "kearth/ceramic": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

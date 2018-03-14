@@ -1,17 +1,17 @@
 [
     {
         "name": "catfan/medoo",
-        "version": "v1.4.5",
-        "version_normalized": "1.4.5.0",
+        "version": "v1.5.5",
+        "version_normalized": "1.5.5.0",
         "source": {
             "type": "git",
             "url": "https://github.com/catfan/Medoo.git",
-            "reference": "8ee8ae1c4df0fee3822a01333eab88893e548fcc"
+            "reference": "4e51f7483b01ed1195565bb64e85ea8bd17b63cb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://files.phpcomposer.com/files/catfan/Medoo/8ee8ae1c4df0fee3822a01333eab88893e548fcc.zip",
-            "reference": "8ee8ae1c4df0fee3822a01333eab88893e548fcc",
+            "url": "https://files.phpcomposer.com/files/catfan/Medoo/4e51f7483b01ed1195565bb64e85ea8bd17b63cb.zip",
+            "reference": "4e51f7483b01ed1195565bb64e85ea8bd17b63cb",
             "shasum": ""
         },
         "require": {
@@ -25,9 +25,9 @@
             "ext-pdo_oci8": "For Oracle version 8 database",
             "ext-pdo_pqsql": "For PostgreSQL database",
             "ext-pdo_sqlite": "For SQLite database",
-            "ext-pdo_sqlsrv": "For MSSQL database on Windows platform"
+            "ext-pdo_sqlsrv": "For MSSQL database"
         },
-        "time": "2017-06-24T14:43:07+00:00",
+        "time": "2018-03-07T09:42:23+00:00",
         "type": "framework",
         "installation-source": "dist",
         "autoload": {
@@ -59,5 +59,27 @@
             "sql",
             "sqlite"
         ]
+    },
+    {
+        "name": "kearth/ceramic",
+        "version": "9999999-dev",
+        "version_normalized": "9999999-dev",
+        "dist": {
+            "type": "path",
+            "url": "/Users/eric/git/KearthLib/kearth/ceramic",
+            "reference": "86798bd5e5bdaf8a232876fb1cb38f77c6d6ca4e",
+            "shasum": null
+        },
+        "require": {
+            "ext-pdo": "*",
+            "php": ">=5.4"
+        },
+        "type": "framework",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Ceramic\\": "/src"
+            }
+        }
     }
 ]

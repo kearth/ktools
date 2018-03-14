@@ -1,0 +1,14 @@
+{
+	"name": "kearth/ceramic",
+	"type": "framework",
+	"require": {
+		"php": ">=5.4",
+		"ext-pdo": "*"
+	},
+    "mininum-stability":"dev",
+	"autoload": {
+		"psr-4": {
+			"Ceramic\\": "/src"
+		}
+	}
+}
