@@ -10,20 +10,20 @@ class HttpClient
 
     private $version;
 
-    private $params; 
+    private $result;
 
-    public function __construct(string $url, array $params, $header = [])
+    public function __construct(string $url, $header = [])
     {
         if (empty($url)) {
             throw new \Exception("url不能为空");
         }
-
-        $this->params = $params;
+        
+        $this->url    = $url;
         $this->header = $header;
 
         $this->ch = curl_init();
-        curl_setopt($this->ch, CURLOPT_URL, $url);
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($this->ch, CURLOPT_HEADER, false);
     }
 
     /*
@@ -37,22 +37,54 @@ class HttpClient
         $this->header = $header;
     }
 
-    public function get($url, $params)
+    public function getResult()
     {
-        $params = http_build_query($params);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url . "?" . $params);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $res = curl_exec($ch);
-        $errorno = curl_errno($ch);
-        curl_close($ch); 
-        return $res;
+        return $this->result;
     }
 
-    public function post($url, $params)
+    public function __toString()
     {
-        $ch = curl_init();
+        return $this->result;
+    }
+
+    private function checkParamsIsArray($params)
+    {
+        if (!is_array($params)) {
+            throw new \Exception("参数格式错误,应该是Array");
+        }
+    }
+
+    /**
+     *
+     *
+     */
+    public function doGet($params = [], $escape = false)
+    {
+        $this->checkParamsIsArray($params);
+
+        $this->url .= "?" . http_build_query($this->params);
+
+        if ($escape) {
+            $this->url = curl_escape($this->ch, $this->url);
+        }
+
+        curl_setopt($this->ch, CURLOPT_URL, $this->url);
+        $this->result = curl_exec($this->ch);
+
+        if (curl_errno($this->result)) {
+            throw new \Exception("Curl error :" . curl_error($this->ch));
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     *
+     *
+     */
+    public function post($params = [], $escape = false)
+    {
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_POST, true);
@@ -70,9 +102,9 @@ class HttpClient
         return $this;
     }
 
-    public function escape($str)
+    public function escape()
     {
-        curl_escape($this->ch, $str);
+        $this->url = curl_escape($this->ch, $this->url);
         return $this;
     }
 
@@ -82,16 +114,15 @@ class HttpClient
         return $this;
     }
 
-    public function exec()
-    {
-        curl_exec($this->ch);
-        return $this;
-    }
-
     public function reset()
     {
         curl_reset($this->ch);
         return $this;
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     public function version($show = false)
