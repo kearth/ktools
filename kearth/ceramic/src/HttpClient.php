@@ -25,6 +25,12 @@ class HttpClient
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->ch, CURLOPT_HEADER, false);
     }
+    
+    public function debug()
+    {
+        curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, false);
+        return $this;
+    }
 
     /*
      * [
@@ -62,7 +68,7 @@ class HttpClient
     {
         $this->checkParamsIsArray($params);
 
-        $this->url .= "?" . http_build_query($this->params);
+        $this->url .= "?" . http_build_query($params);
 
         if ($escape) {
             $this->url = curl_escape($this->ch, $this->url);
@@ -71,7 +77,7 @@ class HttpClient
         curl_setopt($this->ch, CURLOPT_URL, $this->url);
         $this->result = curl_exec($this->ch);
 
-        if (curl_errno($this->result)) {
+        if (curl_errno($this->ch)) {
             throw new \Exception("Curl error :" . curl_error($this->ch));
         }
 
