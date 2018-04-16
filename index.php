@@ -20,7 +20,6 @@ function run()
     array_walk($testMethods, function($value){
         if (strpos($value, "test") === 0) {
             $res = call_user_func($value);
-            var_export($res);
         }   
     });
 }

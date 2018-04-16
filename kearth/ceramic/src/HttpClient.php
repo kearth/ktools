@@ -4,12 +4,16 @@ namespace Ceramic;
 
 class HttpClient
 {
+
     private $url;
 
+	/**
+	 * @var curl句柄
+	 */
     private $ch;
 
     private $version;
-
+    
     private $result;
 
     public function __construct(string $url, $header = [])
@@ -26,21 +30,37 @@ class HttpClient
         curl_setopt($this->ch, CURLOPT_HEADER, false);
     }
     
+    /**
+        * 调试函数
+        *
+        * @return 
+     */
     public function debug()
     {
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, false);
+        curl_setopt($this->ch, CURLOPT_HEADER, true);
         return $this;
     }
 
     /*
      * [
-     *   "Content-type:text/plain"
-     *   "Content-length:100"
+     *   "Content-type" => "text/plain"
+     *   "Content-length" => "100"
      * ]
      */
     public function setHeader(array $header)
     {
         $this->header = $header;
+        return $this;
+    }
+
+    public function getHeader()
+    {
+        $header = [];
+        foreach($this->header as $key => $value) {
+            $header[] = $key . ":" . $value;
+        }
+        return $header;
     }
 
     public function getResult()
@@ -60,10 +80,6 @@ class HttpClient
         }
     }
 
-    /**
-     *
-     *
-     */
     public function doGet($params = [], $escape = false)
     {
         $this->checkParamsIsArray($params);
@@ -73,8 +89,13 @@ class HttpClient
         if ($escape) {
             $this->url = curl_escape($this->ch, $this->url);
         }
-
+    
+        if ($this->header) {
+            curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->getHeader());
+        }
+                
         curl_setopt($this->ch, CURLOPT_URL, $this->url);
+        var_export($this->ch);
         $this->result = curl_exec($this->ch);
 
         if (curl_errno($this->ch)) {
@@ -84,21 +105,25 @@ class HttpClient
         return $this;
     }
 
-    /**
-     *
-     *
-     *
-     */
-    public function post($params = [], $escape = false)
+    public function doPost($params = [])
     {
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-        $res = curl_exec($ch);
-        $errorno = curl_errno($ch);
-        curl_close($ch); 
-        return $res;
+        $this->checkParamsIsArray($params);
+
+        curl_setopt($this->ch, CURLOPT_URL, $this->url);
+        curl_setopt($this->ch, CURLOPT_POST, true);
+
+        if ($this->header) {
+            curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->getHeader());
+        }
+
+        curl_setopt($this->ch, CURLOPT_POSTFIELDS, $params);
+        $this->result = curl_exec($this->ch);
+
+        if (curl_errno($this->ch)) {
+            throw new \Exception("Curl error :" . curl_error($this->ch));
+        }
+
+        return $this;
     }
 
 
