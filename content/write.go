@@ -1,0 +1,5 @@
+package content
+
+func OutputTestFile() {
+
+}

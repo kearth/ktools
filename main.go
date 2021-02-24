@@ -1,11 +1,18 @@
 package main
 
 import (
-	"./kphpgo"
 	"fmt"
+	"github.com/kearth/klib/content"
+	"github.com/kearth/klib/ut"
 )
 
 func main() {
-	var a int
-	fmt.Println(a, kphpgo.Dummy(0))
+	a := new(ut.AutoCreateUT)
+	a.SetOriStr(content.ReadFile("/Users/jiakun01/test/test.go"))
+	a.GetTokens()
+	a.GetPackage()
+	a.GetImport()
+	a.GetFuncList()
+	a.Render()
+	fmt.Printf("Template:\n%v\n", a.Template)
 }
