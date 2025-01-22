@@ -1,2 +1,2 @@
-tests/
-vendor/*
+node_modules
+dist

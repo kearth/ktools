@@ -1,5 +1,0 @@
-package content
-
-func OutputTestFile() {
-
-}
