@@ -1,0 +1,7 @@
+#settings {
+    height: 30px;
+    display: grid;
+    place-items: center;
+    /* 同时水平和垂直居中 */
+    text-align: center;
+}

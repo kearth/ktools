@@ -1,0 +1,21 @@
+#sidebar {
+    min-height: 768px;
+}
+
+#logo {
+    height: 100px;
+    display: grid;
+    place-items: center;
+    /* 同时水平和垂直居中 */
+    text-align: center;
+}
+
+#logo img {
+    display: grid;
+    place-items: center;
+    display: inline-block;
+    /* 同时水平和垂直居中 */
+    /* 纵向居中 */
+    height: 64px;
+    /* 设定一个适当的高度 */
+}

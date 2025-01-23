@@ -1,35 +1,35 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import Sidebar from './menu/Sidebar'
 import './App.css'
 
+import Devtools from './plugin/Devtools'
+import Settings from './plugin/Setting'
+import { Flex, Splitter } from 'antd'
+
+
 function App() {
-  const [count, setCount] = useState(0)
+  // 定义一个状态来保存当前选中的插件 key
+  const [selectedKey, setSelectedKey] = useState('devtools');
+
+  // 根据 selectedKey 渲染不同的插件内容
+  const renderContent = () => {
+    switch (selectedKey) {
+      case 'settings':
+        return <Settings />;
+      default:
+        return <Devtools />;
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Splitter vertical>
+      <Splitter.Panel defaultSize={150} resizable={false}>
+        <Sidebar selectedKey={selectedKey} setSelectedKey={setSelectedKey} />
+      </Splitter.Panel>
+      <Splitter.Panel >
+        {renderContent()}
+      </Splitter.Panel>
+    </Splitter>
   )
 }
-
 export default App

@@ -9,4 +9,7 @@ export default defineConfig({
     react(),
     crx({ manifest }),
   ],
+  resolve: {
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'], // 默认支持的扩展名
+  },
 })
