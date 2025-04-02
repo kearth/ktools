@@ -42,3 +42,32 @@
 .read-the-docs {
   color: #888;
 }
+
+.app-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  overflow: hidden;
+}
+
+.sidebar-panel {
+  background-color: var(--bg-sidebar, #f0f2f5);
+}
+
+.content-panel {
+  background-color: var(--bg-content, #ffffff);
+  overflow: auto;
+}
+
+
+/* 修改选中项的样式 */
+.ant-menu-item-selected {
+  color: #1677ff !important; /* 使用主题色 */
+  background-color: rgba(22, 119, 255, 0.1) !important; /* 半透明背景 */
+}
+
+/* 确保hover状态下文字也可见 */
+.ant-menu-item:hover {
+  color: #1677ff !important;
+  background-color: rgba(22, 119, 255, 0.1) !important;
+}

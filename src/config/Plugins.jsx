@@ -11,6 +11,7 @@ import {
     ReadOutlined,
     CrownOutlined,
     SettingOutlined,
+    BgColorsOutlined,  // 添加调色板图标
 } from "@ant-design/icons";
 
 // 开发工具
@@ -24,6 +25,11 @@ const PluginItems = [
         label: "开发工具",
         key: "devtools",
         icon: <ToolOutlined />,
+    },
+    {
+        label: "画板",
+        key: "drawer",
+        icon: <BgColorsOutlined />,  // 使用调色板图标
     },
 ];
 
