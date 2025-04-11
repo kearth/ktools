@@ -18,8 +18,28 @@
           "description": "常用单位进制转换工具",
           "icon": "SwapOutlined",
           "component": "UnitConverter"
+        },
+        {
+          "key": "codeconvert",
+          "title": "编码转换",
+          "description": "常用编码格式转换工具",
+          "icon": "CodeOutlined",
+          "component": "CodeConverter"
+        },
+        {
+          "key": "textcompare",
+          "title": "文本比对",
+          "description": "对比两段文本的差异",
+          "icon": "DiffOutlined",
+          "component": "TextCompare"
         }
       ]
+    },
+    {
+      "label": "画板",
+      "key": "drawer",
+      "icon": "NodeIndexOutlined",
+      "component": "Drawer"
     },
     {
       "label": "插件管理",

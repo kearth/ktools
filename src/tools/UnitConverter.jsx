@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Input, Select, Tabs } from 'antd';
+import { Input, Select, Card } from 'antd';
 
 const { Option } = Select;
-const { TabPane } = Tabs;
 
 const units = {
   storage: [
@@ -201,21 +200,51 @@ export const UnitConverter = () => {
     handleConvert(inputValue, selectedType, fromUnit, value);
   };
 
-  return (
-    <div style={{ padding: '20px' }}>
-      <Tabs defaultActiveKey="storage" onChange={handleTypeChange}>
-        <TabPane tab="存储" key="storage" />
-        <TabPane tab="长度" key="length" />
-        <TabPane tab="质量" key="mass" />
-        <TabPane tab="面积" key="area" />
-        <TabPane tab="体积" key="volume" />
-        <TabPane tab="功率/热量" key="power" />
-        <TabPane tab="速度" key="speed" />
-        <TabPane tab="密度" key="density" />
-        <TabPane tab="力" key="force" />
-      </Tabs>
+  const unitTypes = [
+    { key: 'storage', label: '存储' },
+    { key: 'length', label: '长度' },
+    { key: 'mass', label: '质量' },
+    { key: 'area', label: '面积' },
+    { key: 'volume', label: '体积' },
+    { key: 'power', label: '功率/热量' },
+    { key: 'speed', label: '速度' },
+    { key: 'density', label: '密度' },
+    { key: 'force', label: '力' },
+  ];
 
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginTop: '20px' }}>
+  return (
+    <Card style={{ margin: '20px' }}>
+      <div style={{ 
+        display: 'flex', 
+        gap: '8px', 
+        flexWrap: 'wrap',
+        marginBottom: '20px' 
+      }}>
+        {unitTypes.map(type => (
+          <div
+            key={type.key}
+            onMouseEnter={() => handleTypeChange(type.key)}  
+            style={{
+              padding: '8px 16px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              backgroundColor: selectedType === type.key ? '#1677ff' : 'transparent',
+              color: selectedType === type.key ? '#fff' : 'inherit',
+              transition: 'all 0.3s',
+              border: '1px solid #d9d9d9',
+              ':hover': {
+                backgroundColor: selectedType === type.key ? '#1677ff' : '#e6f4ff',
+                borderColor: '#1677ff',
+                color: selectedType === type.key ? '#fff' : '#1677ff',
+              }
+            }}
+          >
+            {type.label}
+          </div>
+        ))}
+      </div>
+
+      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
         <Input
           style={{ width: '200px' }}
           value={inputValue}
@@ -239,6 +268,6 @@ export const UnitConverter = () => {
           ))}
         </Select>
       </div>
-    </div>
+    </Card>
   );
 };

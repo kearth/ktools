@@ -10,11 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.0",
     "antd": "^5.23.2",
+    "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",
+    "diff": "^7.0.0",
     "prism-react-renderer": "^2.4.1",
+    "prismjs": "^1.30.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "reactflow": "^11.11.4"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.30",

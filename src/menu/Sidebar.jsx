@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Menu } from "antd";
 import '../styles/Sidebar.css'
 import PluginItems from '../config/Plugins'
-import logo from "../assets/logo.png";
+import logoLight from "../assets/logo_light.png";
+import logoDark from "../assets/logo_dark.png";
 
 function Sidebar({ selectedKey, setSelectedKey, isDarkMode }) {
     const handleMenuClick = (e) => {
@@ -12,7 +13,7 @@ function Sidebar({ selectedKey, setSelectedKey, isDarkMode }) {
     return (
         <div id="sidebar" className={isDarkMode ? 'sidebar-dark' : 'sidebar-light'}>
             <div id="logo">
-                <img src={logo} alt="Logo" />
+                <img src={isDarkMode ? logoDark : logoLight} alt="Logo" />
                 <span className="logo-text">KTOOLS</span>
             </div>
             <Menu

@@ -11,6 +11,9 @@ export default defineConfig({
     crx({ manifest }),
   ],
   resolve: {
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@excalidraw': path.resolve(__dirname, 'node_modules/@excalidraw')
+    }
   },
 })
