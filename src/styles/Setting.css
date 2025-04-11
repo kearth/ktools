@@ -1,7 +1,18 @@
 #settings {
-    height: 30px;
+    padding: 20px;
+}
+
+.plugin-list {
     display: grid;
-    place-items: center;
-    /* 同时水平和垂直居中 */
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.custom-plugin-list {
+    margin-top: 20px;
+    padding: 20px;
     text-align: center;
+    background: #f5f5f5;
+    border-radius: 4px;
+    color: #999;
 }
