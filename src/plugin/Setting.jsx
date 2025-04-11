@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { SettingOutlined } from '@ant-design/icons';
-import './Setting.css'
+import '../styles/Setting.css'
 
 function Settings() {
     // const [selectedKey, setSelectedKey] = useState("overview");

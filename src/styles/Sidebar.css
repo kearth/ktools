@@ -3,13 +3,63 @@
 }
 
 #logo {
-    height: 100px;
-    display: grid;
-    place-items: center;
-    text-align: center;
+    height: 64px;  /* 增加高度 */
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 12px;  /* 增加间距 */
 }
 
 #logo img {
-    display: inline-block;
-    height: 64px;
+    height: 40px;  /* 增大logo尺寸 */
+    width: 40px;
+}
+
+#logo .logo-text {
+    font-size: 24px;  /* 增大字体 */
+    font-weight: 600;
+    letter-spacing: 1px;  /* 增加字间距 */
+}
+
+/* 亮色模式文字颜色 */
+.sidebar-light #logo .logo-text {
+    color: #333333;
+}
+
+/* 暗色模式文字颜色 */
+.sidebar-dark #logo .logo-text {
+    color: #ffffff;
+}
+
+/* 暗黑模式样式 */
+.sidebar-dark {
+    background-color: #2a2a2f;
+}
+
+.sidebar-dark .ant-menu {
+    background-color: transparent;
+}
+
+.sidebar-dark .ant-menu-item {
+    color: #b0b0b0 !important;
+}
+
+.sidebar-dark .ant-menu-item:hover {
+    color: #ffffff !important;
+    background-color: #3a3a3f !important;
+}
+
+.sidebar-dark .ant-menu-item-selected {
+    color: #ffffff !important;
+    background-color: #3a3a3f !important;
+}
+
+/* 亮色模式样式 */
+.sidebar-light {
+    background-color: #ffffff;
+}
+
+.sidebar-light .ant-menu-item:hover {
+    color: #1677ff !important;
+    background-color: #e6f4ff !important;
 }

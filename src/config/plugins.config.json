@@ -1,0 +1,30 @@
+{
+  "plugins": [
+    {
+      "label": "开发工具",
+      "key": "devtools",
+      "icon": "ToolOutlined",
+      "tools": [
+        {
+          "key": "timestamp",
+          "title": "时间戳转换",
+          "description": "时间戳与日期格式互转工具",
+          "icon": "ClockCircleOutlined",
+          "component": "TimeConverter"
+        },
+        {
+          "key": "unitconvert",
+          "title": "单位转换",
+          "description": "常用单位进制转换工具",
+          "icon": "SwapOutlined",
+          "component": "UnitConverter"
+        }
+      ]
+    },
+    {
+      "label": "插件管理",
+      "key": "settings",
+      "icon": "SettingOutlined"
+    }
+  ]
+}

@@ -1,27 +1,13 @@
 import React, { useState } from 'react';
 import { Card, Row, Col, Modal } from 'antd';
-import {
-  ClockCircleOutlined,
-} from '@ant-design/icons';
-
-// 修改后
-import { TimeConverter } from '../tools/TimeConverter';
-
-
-// 工具配置
-const tools = [
-  {
-    key: 'timestamp',
-    title: '时间戳转换',
-    description: '时间戳与日期格式互转工具',
-    icon: <ClockCircleOutlined style={{ fontSize: '24px' }} />,
-    component: TimeConverter,
-  },
-];
+import PluginItems from '../config/Plugins';
 
 const Devtools = () => {
   const [selectedTool, setSelectedTool] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+
+  // 从PluginItems中获取开发工具的配置
+  const tools = PluginItems.find(item => item.key === 'devtools')?.tools || [];
 
   const handleToolClick = (tool) => {
     setSelectedTool(tool);
@@ -32,8 +18,8 @@ const Devtools = () => {
     <div style={{ 
       padding: '20px',
       backgroundColor: '#f8f9fa',
-      minHeight: '100vh',  // 扩展到整个视口高度
-      margin: '-20px',     // 抵消父元素的 padding
+      minHeight: '100vh',
+      margin: '-20px',
     }}>
       <Row gutter={[16, 16]}>
         {tools.map(tool => (
@@ -56,7 +42,6 @@ const Devtools = () => {
         ))}
       </Row>
 
-      {/* Modal 部分保持不变 */}
       <Modal
         title={selectedTool?.title}
         open={modalVisible}

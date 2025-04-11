@@ -2,12 +2,11 @@
 // Fix the React import
 import React, { useState, Suspense, lazy, useEffect } from 'react'
 // 修改导入语句
-import { ConfigProvider, Switch, theme as antdTheme } from 'antd'
+import { ConfigProvider, Switch } from 'antd'
 import { BulbOutlined, BulbFilled } from '@ant-design/icons'
 import Sidebar from './menu/Sidebar'
 import './styles/app.css'
 // 修改导入语句，从Theme.jsx导入两套主题
-import { darkTheme, lightTheme } from './Theme'
 
 // 使用 lazy 加载插件组件
 const Devtools = lazy(() => import('./plugin/Devtools'))
@@ -49,16 +48,15 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-// ResizeHandle 组件
+// ResizeHandle 组件调整宽度
 const ResizeHandle = () => (
   <div
     style={{
-      width: '4px',
+      width: '2px',
       cursor: 'col-resize',
-      background: '#f0f0f0',
+      background: 'transparent',  // 改为透明
       height: '100%',
-      transition: 'background-color 0.2s',
-      ':hover': { background: '#d9d9d9' }
+      transition: 'background-color 0.2s'
     }}
   />
 );
@@ -111,35 +109,31 @@ function App() {
   }
 
   return (
-    <ConfigProvider
-      theme={isDarkMode ? darkTheme : lightTheme}  // 根据isDarkMode状态切换主题
-    >
+    <ConfigProvider>  {/* 移除theme配置 */}
       <div className="app-container">
         <div style={{ 
           width: `${sidebarWidth}px`, 
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          borderRight: '1px solid #1f1f24',
           userSelect: 'none',
-          position: 'relative',
-          backgroundColor: isDarkMode ? '#18181c' : '#ffffff'  // 根据主题设置背景色
+          position: 'relative'
         }}>
           <Sidebar 
             selectedKey={selectedKey} 
             setSelectedKey={setSelectedKey}
-            isDarkMode={isDarkMode}  // 传递主题状态给Sidebar
+            isDarkMode={isDarkMode}
           />
           <div 
             style={{ 
               position: 'absolute',
-              right: '-2px',
+              right: '-1px',  // 从-2px改为-1px
               top: 0,
               bottom: 0,
-              width: '4px',
+              width: '2px',   // 从4px减小到2px
               cursor: 'col-resize',
               zIndex: 100,
-              backgroundColor: isDarkMode ? '#1f1f24' : '#f0f0f0'  // 调整拖拽手柄颜色
+              backgroundColor: isDarkMode ? '#3a3a3f' : '#f0f0f0'  // 暗黑模式下改为hover时的背景色
             }}
             onMouseDown={handleMouseDown}
           >
@@ -158,24 +152,28 @@ function App() {
           {/* 添加导航栏 */}
           <div style={{
             height: '48px',
-            backgroundColor: '#fff',
-            borderBottom: '1px solid #f0f0f0',
+            backgroundColor: isDarkMode ? '#2a2a2f' : '#fff',  // 根据模式切换背景色
+            borderBottom: `1px solid ${isDarkMode ? '#1f1f24' : '#f0f0f0'}`,  // 边框颜色也相应调整
             display: 'flex',
             alignItems: 'center',
             padding: '0 16px',
-            justifyContent: 'flex-end'  // 改为右对齐
+            justifyContent: 'flex-end'
           }}>
             <Switch
-              checkedChildren={<BulbFilled />}
-              unCheckedChildren={<BulbOutlined />}
+              checkedChildren="☀️"
+              unCheckedChildren="🌙"
               checked={isDarkMode}
               onChange={(checked) => setIsDarkMode(checked)}
             />
           </div>
 
           {/* 内容区域 */}
-          <div style={{ flex: 1, overflow: 'auto' }}>
-            {renderContent()}
+          <div style={{ 
+              flex: 1, 
+              overflow: 'auto',
+              padding: '24px',  /* 添加内边距 */
+          }}>
+              {renderContent()}
           </div>
         </div>
       </div>
